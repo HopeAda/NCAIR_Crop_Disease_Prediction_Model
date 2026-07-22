@@ -1,7 +1,104 @@
-import React from "react";
+import { useContext, useRef } from "react";
+import Button from "../components/Button";
+import CameraInput from "../components/CameraInput";
+import DataContext from "../context/DataContext";
+import LoadingScreen from "./LoadingScreen";
+// import { useNavigate } from "react-router-dom";
 
 const CameraScreen = () => {
-	return <div></div>;
+	const ctx = useContext(DataContext);
+	const uploadRef = useRef<HTMLInputElement>(null);
+	const cameraRef = useRef<HTMLInputElement>(null);
+	// const navigate = useNavigate();
+
+	const cameraFunction = () => {
+		cameraRef.current?.click();
+	};
+	const uploadFunction = () => {
+		uploadRef.current?.click();
+	};
+
+	const fileInputHandler = (file) => {
+		ctx?.uploadImage(file);
+	};
+
+	return (
+		<div className="flex flex-col justify-center gap-6 p-6 pt-0 items-center">
+			<h2 className="pb-4 pt-2 text-sm font-semibold">
+				PLANT DISEASE DIAGNOSIS
+			</h2>
+			<CameraInput clickFunction={cameraFunction} />
+			<div className="w-full flex flex-col gap-2">
+				{!ctx?.imageLoaded ? (
+					<>
+						<Button
+							text="Take Photo"
+							clickFunction={cameraFunction}
+							type="main"
+						/>
+						<Button
+							text="Upload from Gallery"
+							clickFunction={uploadFunction}
+							type="secondary"
+						/>
+					</>
+				) : (
+					<>
+						<Button
+							text="Diagnose Crop"
+							clickFunction={() => {
+								ctx?.DiagnoseCrop();
+							}}
+							type="main"
+						/>
+						<Button
+							text="Upload another Image"
+							clickFunction={() => {
+								ctx?.setImgUrl("");
+								ctx?.setImageLoaded(false);
+							}}
+							type="secondary"
+						/>
+					</>
+				)}
+				<input
+					type="file"
+					accept="image/*"
+					ref={uploadRef}
+					className="hidden"
+					onChange={(e) => {
+						fileInputHandler(e.target.files);
+					}}
+				/>
+				<input
+					type="file"
+					accept="image/*"
+					capture="environment"
+					ref={cameraRef}
+					className="hidden"
+					onChange={(e) => {
+						fileInputHandler(e.target.files);
+					}}
+				/>
+			</div>
+			<div className="flex gap-3 p-4 rounded-2xl bg-[#f7faf9] border-3 border-[#a8d0c5]">
+				<div className="w-20 h-20">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 640 640"
+						className="fill-[#0f6e56]"
+					>
+						<path d="M320 32C328 32 335.4 36 339.9 42.6L398.7 130L502.1 109.8C509.9 108.3 518 110.7 523.7 116.4C529.4 122.1 531.8 130.2 530.3 138L510 241.3L597.4 300.1C604 304.5 608 312 608 320C608 328 604 335.4 597.4 339.9L510 398.7L530.2 502C531.7 509.8 529.3 517.9 523.6 523.6C517.9 529.3 509.8 531.7 502 530.2L398.7 510L339.9 597.4C335.4 604 328 608 320 608C312 608 304.6 604 300.1 597.4L241.3 510L137.9 530.2C130.1 531.7 122 529.3 116.3 523.6C110.6 517.9 108.2 509.8 109.7 502L130 398.7L42.6 339.9C36 335.4 32 328 32 320C32 312 36 304.6 42.6 300.1L130 241.3L109.8 137.9C108.3 130.1 110.7 122 116.4 116.3C122.1 110.6 130.2 108.2 138 109.7L241.3 129.9L300.1 42.5L301.9 40.2C306.4 35 313 32 320 32zM272.2 170C266.8 178 257.2 182 247.7 180.2L163.7 163.8L180.1 247.8C181.9 257.3 177.9 266.9 169.9 272.3L99 320L170 367.8C178 373.2 182 382.8 180.2 392.3L163.8 476.3L247.8 459.9L251.3 459.5C259.6 459.1 267.6 463.1 272.3 470.1L320.1 541.1L367.9 470.1L370.1 467.3C375.7 461.2 384.1 458.3 392.4 460L476.4 476.4L460 392.4C458.2 382.9 462.2 373.3 470.2 367.9L541.2 320.1L470.2 272.3C462.2 266.9 458.2 257.3 460 247.8L476.4 163.8L392.4 180.2C382.9 182 373.3 178 367.9 170L320.1 99L272.3 170zM320 440C253.7 440 200 386.3 200 320C200 253.7 253.7 200 320 200C386.3 200 440 253.7 440 320C440 386.3 386.3 440 320 440zM320 248C280.2 248 248 280.2 248 320C248 359.8 280.2 392 320 392C359.8 392 392 359.8 392 320C392 280.2 359.8 248 320 248z" />
+					</svg>
+				</div>
+				<span>
+					For best results, photograph in natural daylight with the
+					affected leaf filling most of the frame.
+				</span>
+			</div>
+			{ctx?.isLoading && <LoadingScreen />}
+		</div>
+	);
 };
 
 export default CameraScreen;
