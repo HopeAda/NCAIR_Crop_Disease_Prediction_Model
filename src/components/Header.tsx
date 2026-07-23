@@ -1,6 +1,22 @@
+import { useContext, useState, useEffect } from "react";
+import DataContext from "../context/DataContext";
+
 const Header = () => {
+	const [menuOpen, setMenuOpen] = useState(false);
+	const ctx = useContext(DataContext);
+
+	useEffect(() => {
+		if (menuOpen) {
+			document.body.classList.add("overflow-hidden");
+		} else {
+			document.body.classList.remove("overflow-hidden");
+		}
+
+		return () => {};
+	}, [menuOpen]);
+
 	return (
-		<header className="w-full flex justify-center items-center pt-2">
+		<header className="w-full flex justify-between items-center p-2 relative bg-white">
 			<article className="flex gap-2 p-2 items-center justify-center">
 				<div className="p-2 rounded-md bg-green-900">
 					<svg
@@ -18,6 +34,56 @@ const Header = () => {
 				</div>
 				<h1 className="font-bold">CropPredict</h1>
 			</article>
+
+			<div
+				className="menu-btn w-10 h-10 p-2 rounded-full cursor-pointer hover:bg-[#e4e4e4c5] justify-self-end md:hidden"
+				onClick={() => {
+					setMenuOpen(true);
+				}}
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 640 640"
+					className="fill-black"
+				>
+					<path d="M96 160C96 142.3 110.3 128 128 128L512 128C529.7 128 544 142.3 544 160C544 177.7 529.7 192 512 192L128 192C110.3 192 96 177.7 96 160zM96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320zM544 480C544 497.7 529.7 512 512 512L128 512C110.3 512 96 497.7 96 480C96 462.3 110.3 448 128 448L512 448C529.7 448 544 462.3 544 480z" />
+				</svg>
+			</div>
+
+			<div
+				className={`menu-bar fixed top-0 left-0 h-screen z-50 w-full ${menuOpen ? "block" : "hidden md:block"} md:absolute md:top-[calc(100%)] md:h-[calc(100vh-60px)] md:w-fit`}
+			>
+				<div
+					className="bg-[#00000086] w-screen h-screen md:hidden"
+					onClick={() => {
+						setMenuOpen(false);
+					}}
+				></div>
+
+				<div className="w-60 md:w-40 lg:w-60 bg-white h-full fixed top-0 left-0 flex flex-col md:relative  md:h-[calc(100vh-60px)] overflow-hidden md:justify-end">
+					<span className="w-full p-3 bg-[#056e56] text-white font-bold">
+						Language:
+					</span>
+					<ul className="flex flex-col w-full font-bold">
+						<li
+							className={`w-full p-2 md:px-4 hover:bg-[#e4e4e4c5] cursor-pointer pl-6 transition-colors ${ctx?.language == "english" ? "text-[#056e56] font-extrabold" : ""}`}
+							onClick={() => {
+								ctx?.setLanguage("english");
+							}}
+						>
+							English
+						</li>
+						<li
+							className={`w-full p-2 md:px-4 hover:bg-[#e4e4e4c5] cursor-pointer pl-6 transition-colors ${ctx?.language == "hausa" ? "text-[#056e56] font-extrabold" : ""}`}
+							onClick={() => {
+								ctx?.setLanguage("hausa");
+							}}
+						>
+							Hausa
+						</li>
+					</ul>
+				</div>
+			</div>
 		</header>
 	);
 };

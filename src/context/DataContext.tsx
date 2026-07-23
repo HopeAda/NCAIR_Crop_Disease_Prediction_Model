@@ -10,6 +10,8 @@ type DataContextTypes = {
 	imgUrl: string;
 	setImgUrl: React.Dispatch<React.SetStateAction<string>>;
 	uploadImage: (file: object) => void;
+	language: string;
+	setLanguage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type DataContextProviderProps = {
@@ -23,6 +25,7 @@ export const DataContextProvider = ({ children }: DataContextProviderProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 	const [imgUrl, setImgUrl] = useState("");
+	const [language, setLanguage] = useState("english");
 
 	const uploadImage = (file) => {
 		console.log(file[0]);
@@ -60,6 +63,8 @@ export const DataContextProvider = ({ children }: DataContextProviderProps) => {
 				imageLoaded,
 				setImageLoaded,
 				uploadImage,
+				setLanguage,
+				language,
 			}}
 		>
 			{children}

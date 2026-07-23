@@ -9,6 +9,7 @@ const CameraScreen = () => {
 	const ctx = useContext(DataContext);
 	const uploadRef = useRef<HTMLInputElement>(null);
 	const cameraRef = useRef<HTMLInputElement>(null);
+
 	// const navigate = useNavigate();
 
 	const cameraFunction = () => {
@@ -23,66 +24,70 @@ const CameraScreen = () => {
 	};
 
 	return (
-		<div className="flex flex-col justify-center gap-6 p-6 pt-0 items-center">
-			<h2 className="pb-4 pt-2 text-sm font-semibold">
-				PLANT DISEASE DIAGNOSIS
+		<div className="flex flex-col  gap-4 p-6 pt-0 items-center md:min-h-[calc(100vh-60px)] overflow-y-auto shrink-0 ">
+			<h2 className=" py-2 text-sm font-semibold text-[#056e56] uppercase">
+				{ctx?.language === "hausa"
+					? "Gano Cututtukan Shuke-shuke"
+					: "PLANT DISEASE DIAGNOSIS"}
 			</h2>
-			<CameraInput clickFunction={cameraFunction} />
-			<div className="w-full flex flex-col gap-2">
-				{!ctx?.imageLoaded ? (
-					<>
-						<Button
-							text="Take Photo"
-							clickFunction={cameraFunction}
-							type="main"
-						/>
-						<Button
-							text="Upload from Gallery"
-							clickFunction={uploadFunction}
-							type="secondary"
-						/>
-					</>
-				) : (
-					<>
-						<Button
-							text="Diagnose Crop"
-							clickFunction={() => {
-								ctx?.DiagnoseCrop();
-							}}
-							type="main"
-						/>
-						<Button
-							text="Upload another Image"
-							clickFunction={() => {
-								ctx?.setImgUrl("");
-								ctx?.setImageLoaded(false);
-							}}
-							type="secondary"
-						/>
-					</>
-				)}
-				<input
-					type="file"
-					accept="image/*"
-					ref={uploadRef}
-					className="hidden"
-					onChange={(e) => {
-						fileInputHandler(e.target.files);
-					}}
-				/>
-				<input
-					type="file"
-					accept="image/*"
-					capture="environment"
-					ref={cameraRef}
-					className="hidden"
-					onChange={(e) => {
-						fileInputHandler(e.target.files);
-					}}
-				/>
+			<div className="w-full flex flex-col gap-4 md:flex-row md:items-end">
+				<CameraInput clickFunction={cameraFunction} />
+				<div className="w-full flex flex-col gap-2">
+					{!ctx?.imageLoaded ? (
+						<>
+							<Button
+								text="Take Photo"
+								clickFunction={cameraFunction}
+								type="main"
+							/>
+							<Button
+								text="Upload from Gallery"
+								clickFunction={uploadFunction}
+								type="secondary"
+							/>
+						</>
+					) : (
+						<>
+							<Button
+								text="Diagnose Crop"
+								clickFunction={() => {
+									ctx?.DiagnoseCrop();
+								}}
+								type="main"
+							/>
+							<Button
+								text="Upload another Image"
+								clickFunction={() => {
+									ctx?.setImgUrl("");
+									ctx?.setImageLoaded(false);
+								}}
+								type="secondary"
+							/>
+						</>
+					)}
+					<input
+						type="file"
+						accept="image/*"
+						ref={uploadRef}
+						className="hidden"
+						onChange={(e) => {
+							fileInputHandler(e.target.files);
+						}}
+					/>
+					<input
+						type="file"
+						accept="image/*"
+						capture="environment"
+						ref={cameraRef}
+						className="hidden"
+						onChange={(e) => {
+							fileInputHandler(e.target.files);
+						}}
+					/>
+				</div>
 			</div>
-			<div className="flex gap-3 p-4 rounded-2xl bg-[#f7faf9] border-3 border-[#a8d0c5]">
-				<div className="w-20 h-20">
+			<div className="flex gap-3 p-4 rounded-2xl bg-[#f7faf9] border-3 border-[#a8d0c5] w-full h-fit md:items-center">
+				<div className="w-10 h-10">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 640 640"
@@ -92,8 +97,9 @@ const CameraScreen = () => {
 					</svg>
 				</div>
 				<span>
-					For best results, photograph in natural daylight with the
-					affected leaf filling most of the frame.
+					{ctx?.language === "hausa"
+						? "Domin samun sakamako mafi kyau, a ɗauki hoton a cikin hasken rana na halitta, tare da sanya ganyen da abin ya shafa ya mamaye mafi yawan sararin hoton."
+						: "For best results, photograph in natural daylight with the affected leaf filling most of the frame."}
 				</span>
 			</div>
 			{ctx?.isLoading && <LoadingScreen />}

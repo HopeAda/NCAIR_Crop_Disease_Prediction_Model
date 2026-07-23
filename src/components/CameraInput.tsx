@@ -11,7 +11,7 @@ const CameraInput = ({ clickFunction }: CameraInputPropsProvider) => {
 
 	return (
 		<div
-			className="w-full"
+			className="w-full md:w-[150%]"
 			onDragOver={(e) => {
 				e.preventDefault();
 				setIsDragging(true);
@@ -27,7 +27,7 @@ const CameraInput = ({ clickFunction }: CameraInputPropsProvider) => {
 		>
 			{!ctx?.imageLoaded ? (
 				<div
-					className={`group p-6 flex flex-col justify-center  items-center gap-6 rounded-2xl border-4 border-dashed  hover:bg-[#E8F5F1] cursor-pointer hover:border-[#0F6E56] transition-all ${isDragging ? "bg-[#E8F5F1] border-[#0F6E56]" : "border-[#A8D0C5] bg-[#F7FAF9]"} aspect-4/3`}
+					className={`group p-6 flex flex-col justify-center  items-center gap-6 rounded-2xl border-4 border-dashed  hover:bg-[#E8F5F1] cursor-pointer hover:border-[#0F6E56] transition-all ${isDragging ? "bg-[#E8F5F1] border-[#0F6E56]" : "border-[#A8D0C5] bg-[#F7FAF9]"} aspect-4/3 md:aspect-3/2`}
 					onClick={clickFunction}
 				>
 					<div className="p-4 rounded-lg bg-[#E8F5F1] w-fit group-hover:bg-[#D4EDE7] transition-all">
@@ -40,13 +40,21 @@ const CameraInput = ({ clickFunction }: CameraInputPropsProvider) => {
 						</svg>
 					</div>
 					<article className="flex flex-col gap text-sm items-center">
-						<span>Tap to take a photo of your plant</span>
-						<span>or drag and drop an image</span>
+						<span>
+							{ctx?.language === "hausa"
+								? "Danna don ɗaukar hoton shukarka"
+								: "Tap to take a photo of your plant"}
+						</span>
+						<span>
+							{ctx?.language === "hausa"
+								? "ko kuma ka ja ka ajiye hoto"
+								: "or drag and drop an image"}
+						</span>
 					</article>
 				</div>
 			) : (
 				<div
-					className={`rounded-2xl overflow-hidden border-3 aspect-4/3 object-cover ${isDragging ? " border-[#0F6E56]" : "border-[#A8D0C5] "}`}
+					className={`rounded-2xl overflow-hidden border-3 aspect-4/3 object-cover md:aspect-3/2 ${isDragging ? " border-[#0F6E56]" : "border-[#A8D0C5] "}`}
 				>
 					<img src={ctx?.imgUrl} alt="" className="w-full h-full" />
 				</div>
