@@ -1,0 +1,79 @@
+import Button from "../components/Button";
+import RecommendedStep from "../components/RecommendedStep";
+import { useNavigate } from "react-router-dom";
+// import PRED_RESULT from "../mock/mock";
+import Badge from "../components/Badge";
+import { useContext } from "react";
+import DataContext from "../context/DataContext";
+
+const ResultScreen = () => {
+	const navigate = useNavigate();
+	const ctx = useContext(DataContext);
+	const PRED_RESULT = ctx?.result;
+	console.log(PRED_RESULT);
+
+	// Safely access the nested language property
+	const languageResult = PRED_RESULT?.RESULT?.[ctx?.language];
+
+	// Safely access the base64 image
+	const annotatedBase64 = PRED_RESULT?.annotated_image;
+
+	return (
+		<div className="w-full md:min-h-[calc(100vh-2rem)] flex flex-col p-6 items-center gap-4 grow  overflow-y-auto shrink-0">
+			<div className="flex flex-col  gap-4 w-full">
+				<div className="image rounded-lg overflow-hidden aspect-4/3 w-full md:aspect-3/1 ">
+					<img
+						src={`data:image/png;base64,${annotatedBase64}`}
+						alt=""
+						className="w-full h-full object-cover"
+					/>
+				</div>
+				<div className="w-full flex justify-between items-center gap-4 ">
+					<Badge status={PRED_RESULT.status} />
+					<article>
+						Confidence:{" "}
+						<span className="font-extrabold">
+							{(PRED_RESULT.confidence * 100).toFixed(2)}%
+						</span>
+					</article>
+				</div>
+			</div>
+			<div className="flex flex-col gap-.5  p-3 px-4 rounded-lg border-2 border-[#A8D0C5] bg-[#F7FAF9] w-full">
+				<span className="uppercase text-sm font-semibold text-[#A8D0C5] text-[.8rem]">
+					{PRED_RESULT.crop}
+				</span>
+				<span className="text-3xl font-bold">
+					{PRED_RESULT.disease}
+				</span>
+				<p className="pt-2 text-[#76a599] text-[1rem] ">
+					{languageResult.description}
+				</p>
+			</div>
+			<div className="recommended flex flex-col rounded-2xl overflow-hidden w-full">
+				<div className="w-full bg-[#0F6E56] text-white p-4">
+					<h3 className="text-md font-bold uppercase">
+						Recommended Steps
+					</h3>
+				</div>
+				<div className="flex flex-col border border-[#A8D0C5] rounded-b-2xl ">
+					{languageResult.steps.map((step, idx) => (
+						<RecommendedStep step={step} id={idx + 1} key={idx} />
+					))}
+				</div>
+			</div>
+
+			{/* <div className="w-full h-50 border border-[#a8d0c5] rounded-2xl">
+				<span></span>
+			</div> */}
+			<Button
+				text="Scan Another Crop"
+				clickFunction={() => {
+					navigate("/");
+				}}
+				type="main"
+			/>
+		</div>
+	);
+};
+
+export default ResultScreen;
