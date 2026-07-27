@@ -313,7 +313,9 @@ const ResultScreen = () => {
 
 	// A recognized-but-healthy detection has no RESULT to show
 	const hasRecommendation =
-		PRED_RESULT?.recognized && PRED_RESULT?.RESULT != null;
+		PRED_RESULT?.recognized &&
+		PRED_RESULT?.RESULT != null &&
+		PRED_RESULT?.confidence >= 0.6;
 
 	const languageResult: LanguageResult | null = hasRecommendation
 		? PRED_RESULT.RESULT![currentLang] || PRED_RESULT.RESULT!["English"]
@@ -407,10 +409,21 @@ const ResultScreen = () => {
 					</div>
 				</>
 			) : (
+				// <Fallback
+				// 	message={
+				// 		PRED_RESULT?.recognized
+				// 			? "Great news — this crop looks healthy! No treatment needed."
+				// 			: "No result. Please try again"
+				// 	}
+				// 	mode={PRED_RESULT?.status === "diseased" ? "default" : ""}
+				// />
+
 				<Fallback
 					message={
 						PRED_RESULT?.recognized
-							? "Great news — this crop looks healthy! No treatment needed."
+							? PRED_RESULT?.confidence < 0.6
+								? "We're not confident enough in this result. Please try scanning again with a clearer photo."
+								: "Great news — this crop looks healthy! No treatment needed."
 							: "No result. Please try again"
 					}
 					mode={PRED_RESULT?.status === "diseased" ? "default" : ""}
