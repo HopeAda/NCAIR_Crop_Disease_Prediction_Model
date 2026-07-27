@@ -6,10 +6,11 @@ export type ResultType = {
 	recognized: boolean;
 	status: "diseased" | "healthy";
 	disease: string;
-	RESULT: {
+	RESULT?: {
 		English: LanguageResult;
 		Hausa: LanguageResult;
 	};
+	message?: string;
 };
 
 export type LanguageResult = {
