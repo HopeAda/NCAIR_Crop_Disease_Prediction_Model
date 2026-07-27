@@ -1,5 +1,6 @@
 import Button from "../components/Button";
 import RecommendedStep from "../components/RecommendedStep";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import PRED_RESULT from "../mock/mock";
 import Badge from "../components/Badge";
@@ -144,6 +145,13 @@ const ResultScreen = () => {
 	const ctx = useContext(DataContext);
 	const PRED_RESULT = ctx?.result;
 	console.log(PRED_RESULT);
+
+	useEffect(() => {
+		if (!PRED_RESULT) {
+			navigate("/", { replace: true });
+		}
+	}, [PRED_RESULT, navigate]);
+
 	if (!PRED_RESULT) {
 		return null;
 	}
