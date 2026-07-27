@@ -205,7 +205,9 @@ const ResultScreen = () => {
 
 					<div className="cause flex flex-col gap-.5 p-3 px-4 rounded-lg border-2 border-[#A8D0C5] bg-[#F7FAF9] w-full">
 						<span className="uppercase text-[#0F6E56] text-md font-bold">
-							The Cause
+							{ctx?.language == "English"
+								? "The Cause"
+								: "Dalilin"}
 						</span>
 						<p className="pt-2 text-[#76a599] text-[1rem]">
 							{languageResult.cause}
