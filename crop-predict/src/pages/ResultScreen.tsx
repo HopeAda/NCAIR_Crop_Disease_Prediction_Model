@@ -243,7 +243,7 @@ const ResultScreen = () => {
 					message={
 						PRED_RESULT?.recognized
 							? "Great news — this crop looks healthy! No treatment needed."
-							: PRED_RESULT?.message || "No result"
+							: "No result. Please try again"
 					}
 					mode={PRED_RESULT?.status === "diseased" ? "default" : ""}
 				/>
