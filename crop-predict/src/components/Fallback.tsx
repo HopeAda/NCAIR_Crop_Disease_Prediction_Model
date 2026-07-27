@@ -24,8 +24,8 @@ const Fallback = ({ message, mode }: FallbackProviderProps) => {
 		}
 	}
 	return (
-		<div className="grow w-full h-30 flex justify-center items-center shrink-0">
-			<div className=" h-fit flex flex-col gap-.5  p-3 px-4 rounded-lg border-2 border-[#A8D0C5] bg-[#F7FAF9] w-full">
+		<div className="grow w-full h-30 flex justify-center items-center shrink-0 md:w-fit">
+			<div className=" h-fit flex flex-col gap-.5  p-3 px-4 rounded-lg border-2 border-[#A8D0C5] bg-[#F7FAF9] w-full md:w-fit">
 				<span className="text-[#0F6E56] text-md font-bold">{text}</span>
 			</div>
 		</div>
