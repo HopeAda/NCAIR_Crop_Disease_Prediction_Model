@@ -35,12 +35,20 @@ const CameraScreen = () => {
 					{!ctx?.imageLoaded ? (
 						<>
 							<Button
-								text="Take Photo"
+								text={
+									ctx?.language == "English"
+										? "Take Photo"
+										: "Ɗauki Hoto"
+								}
 								clickFunction={cameraFunction}
 								type="main"
 							/>
 							<Button
-								text="Upload from Gallery"
+								text={
+									ctx?.language == "English"
+										? "Upload from Gallery"
+										: "Loda daga ɗakin ajiyar hotuna"
+								}
 								clickFunction={uploadFunction}
 								type="secondary"
 							/>

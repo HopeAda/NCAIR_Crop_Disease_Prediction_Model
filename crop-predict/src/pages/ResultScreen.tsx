@@ -333,7 +333,9 @@ const ResultScreen = () => {
 					<div className="w-full flex justify-between items-center gap-4">
 						<Badge status={PRED_RESULT.status} />
 						<article>
-							Confidence:{" "}
+							{ctx.language == "English"
+								? "Confidence:"
+								: "Dogaro da kai:"}{" "}
 							<span className="font-extrabold">
 								{(PRED_RESULT.confidence * 100).toFixed(2)}%
 							</span>
