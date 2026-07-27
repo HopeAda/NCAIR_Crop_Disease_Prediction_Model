@@ -5,15 +5,23 @@ import { useNavigate } from "react-router-dom";
 import Badge from "../components/Badge";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
+import type { LanguageResult, ResultType } from "../types/types";
 
 const ResultScreen = () => {
 	const navigate = useNavigate();
 	const ctx = useContext(DataContext);
 	const PRED_RESULT = ctx?.result;
+	if (!PRED_RESULT) {
+		return;
+	}
 	console.log(PRED_RESULT);
+	const RESULT: LanguageResult = PRED_RESULT?.RESULT;
+	if (!RESULT) {
+		return;
+	}
 
 	// Safely access the nested language property
-	const languageResult = PRED_RESULT?.RESULT?.[ctx?.language];
+	const languageResult: LanguageResult = RESULT?.[`${ctx?.language}`];
 
 	// Safely access the base64 image
 	const annotatedBase64 = PRED_RESULT?.annotated_image;
@@ -25,7 +33,7 @@ const ResultScreen = () => {
 					<img
 						src={`data:image/png;base64,${annotatedBase64}`}
 						alt=""
-						className="w-full h-full object-cover"
+						className="w-full h-full md:object-cover"
 					/>
 				</div>
 				<div className="w-full flex justify-between items-center gap-4 ">
@@ -38,6 +46,7 @@ const ResultScreen = () => {
 					</article>
 				</div>
 			</div>
+
 			<div className="flex flex-col gap-.5  p-3 px-4 rounded-lg border-2 border-[#A8D0C5] bg-[#F7FAF9] w-full">
 				<span className="uppercase text-sm font-semibold text-[#A8D0C5] text-[.8rem]">
 					{PRED_RESULT.crop}
@@ -49,6 +58,16 @@ const ResultScreen = () => {
 					{languageResult.description}
 				</p>
 			</div>
+
+			<div className=" cause fflex flex-col gap-.5  p-3 px-4 rounded-lg border-2 border-[#A8D0C5] bg-[#F7FAF9] w-full">
+				<span className="uppercase text-[#0F6E56] text-md font-bold">
+					The Cause
+				</span>
+				<p className="pt-2 text-[#76a599] text-[1rem]">
+					{languageResult.cause}
+				</p>
+			</div>
+
 			<div className="recommended flex flex-col rounded-2xl overflow-hidden w-full">
 				<div className="w-full bg-[#0F6E56] text-white p-4">
 					<h3 className="text-md font-bold uppercase">
@@ -62,12 +81,34 @@ const ResultScreen = () => {
 				</div>
 			</div>
 
+			<div className="prevent flex flex-col rounded-2xl overflow-hidden w-full">
+				<div className="w-full bg-[#0F6E56] text-white p-4">
+					<h3 className="text-md font-bold uppercase">
+						HOW TO PREVENT
+					</h3>
+				</div>
+				<div className="flex flex-col border border-[#A8D0C5] rounded-b-2xl ">
+					{languageResult.prevention.map((step, idx) => (
+						<RecommendedStep step={step} id={idx + 1} key={idx} />
+					))}
+				</div>
+			</div>
+
 			{/* <div className="w-full h-50 border border-[#a8d0c5] rounded-2xl">
 				<span></span>
 			</div> */}
 			<Button
-				text="Scan Another Crop"
+				text={
+					ctx?.language === "Hausa"
+						? "Duba wani amfanin gona"
+						: "Scan another Crop"
+				}
 				clickFunction={() => {
+					ctx?.setIsLoading(true);
+					ctx?.setImageLoaded(false);
+					ctx?.setImgUrl("");
+					ctx?.setResult(null);
+					ctx?.setIsLoading(false);
 					navigate("/");
 				}}
 				type="main"

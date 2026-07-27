@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import type { ResultType, LanguageType } from "../types/types";
 
 type DataContextTypes = {
 	isLoading: boolean;
@@ -10,10 +11,10 @@ type DataContextTypes = {
 	imgUrl: string;
 	setImgUrl: React.Dispatch<React.SetStateAction<string>>;
 	uploadImage: (file: object) => void;
-	language: string;
-	setLanguage: React.Dispatch<React.SetStateAction<string>>;
-	result: object;
-	setResult: React.Dispatch<React.SetStateAction<object>>;
+	language: LanguageType;
+	setLanguage: React.Dispatch<React.SetStateAction<LanguageType>>;
+	result: ResultType | null;
+	setResult: React.Dispatch<React.SetStateAction<ResultType | null>>;
 };
 
 type DataContextProviderProps = {
@@ -29,9 +30,9 @@ export const DataContextProvider = ({ children }: DataContextProviderProps) => {
 	const [imgUrl, setImgUrl] = useState("");
 	const [language, setLanguage] = useState("English");
 	const [selectedFile, setSelectedFile] = useState("");
-	const [result, setResult] = useState({});
+	const [result, setResult] = useState<ResultType | null>(null);
 
-	const uploadImage = (file) => {
+	const uploadImage = (file: FileList) => {
 		if (!["image/jpeg", "image/png", "image/webp"].includes(file[0].type)) {
 			alert("Invalid file type");
 			return;
@@ -42,24 +43,24 @@ export const DataContextProvider = ({ children }: DataContextProviderProps) => {
 		setImageLoaded(true);
 	};
 
-	async function getPrediction(file) {
-		const blobFile = await fetch(file).then((res) => res.blob());
+	// async function getPrediction(file) {
+	// 	const blobFile = await fetch(file).then((res) => res.blob());
 
-		const formData = new FormData();
+	// 	const formData = new FormData();
 
-		formData.append("file", blobFile, "photo.jpg");
+	// 	formData.append("file", blobFile, "photo.jpg");
 
-		const res = await fetch(
-			"https://stung-pursuit-earthly.ngrok-free.dev/predict",
-			{
-				method: "POST",
-				body: formData,
-			},
-		);
-		return res.json();
-	}
+	// 	const res = await fetch(
+	// 		"https://stung-pursuit-earthly.ngrok-free.dev/predict",
+	// 		{
+	// 			method: "POST",
+	// 			body: formData,
+	// 		},
+	// 	);
+	// 	return res.json();
+	// }
 
-	async function getDiagnosis(file) {
+	async function getDiagnosis(file: string) {
 		const blobFile = await fetch(file).then((res) => res.blob());
 
 		const formData = new FormData();
@@ -76,22 +77,22 @@ export const DataContextProvider = ({ children }: DataContextProviderProps) => {
 		return res.json();
 	}
 
-	async function getRecommendation(
-		crop: string,
-		disease: string,
-		confidence: number,
-		status: string,
-	) {
-		const res = await fetch(
-			"https://stung-pursuit-earthly.ngrok-free.dev/recommend",
-			{
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ crop, disease, confidence, status }),
-			},
-		);
-		return res.json();
-	}
+	// async function getRecommendation(
+	// 	crop: string,
+	// 	disease: string,
+	// 	confidence: number,
+	// 	status: string,
+	// ) {
+	// 	const res = await fetch(
+	// 		"https://stung-pursuit-earthly.ngrok-free.dev/recommend",
+	// 		{
+	// 			method: "POST",
+	// 			headers: { "Content-Type": "application/json" },
+	// 			body: JSON.stringify({ crop, disease, confidence, status }),
+	// 		},
+	// 	);
+	// 	return res.json();
+	// }
 
 	useEffect(() => {
 		if (isLoading) {

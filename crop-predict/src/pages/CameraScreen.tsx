@@ -25,7 +25,7 @@ const CameraScreen = () => {
 	return (
 		<div className="flex flex-col  gap-4 p-6 pt-0 items-center md:min-h-[calc(100vh-60px)] overflow-y-auto shrink-0 ">
 			<h2 className=" py-2 text-sm font-semibold text-[#056e56] uppercase">
-				{ctx?.language === "hausa"
+				{ctx?.language === "Hausa"
 					? "Gano Cututtukan Shuke-shuke"
 					: "PLANT DISEASE DIAGNOSIS"}
 			</h2>
@@ -96,7 +96,7 @@ const CameraScreen = () => {
 					</svg>
 				</div>
 				<span>
-					{ctx?.language === "hausa"
+					{ctx?.language === "Hausa"
 						? "Domin samun sakamako mafi kyau, a ɗauki hoton a cikin hasken rana na halitta, tare da sanya ganyen da abin ya shafa ya mamaye mafi yawan sararin hoton."
 						: "For best results, photograph in natural daylight with the affected leaf filling most of the frame."}
 				</span>

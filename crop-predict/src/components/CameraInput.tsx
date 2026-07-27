@@ -41,12 +41,12 @@ const CameraInput = ({ clickFunction }: CameraInputPropsProvider) => {
 					</div>
 					<article className="flex flex-col gap text-sm items-center">
 						<span>
-							{ctx?.language === "hausa"
+							{ctx?.language === "Hausa"
 								? "Danna don ɗaukar hoton shukarka"
 								: "Tap to take a photo of your plant"}
 						</span>
 						<span>
-							{ctx?.language === "hausa"
+							{ctx?.language === "Hausa"
 								? "ko kuma ka ja ka ajiye hoto"
 								: "or drag and drop an image"}
 						</span>
