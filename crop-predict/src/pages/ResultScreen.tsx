@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Badge from "../components/Badge";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
-import type { LanguageResult } from "../types/types";
+import type { LanguageResult, LanguageType } from "../types/types";
 import Fallback from "../components/Fallback";
 
 const ResultScreen = () => {
@@ -21,12 +21,15 @@ const ResultScreen = () => {
 		| { English: LanguageResult; Hausa: LanguageResult }
 		| undefined = PRED_RESULT?.RESULT;
 
-	// if (!RESULT) {
-	// 	return;
-	// }
+	if (!RESULT) {
+		return null;
+	}
 
 	// Safely access the nested language property
-	const languageResult: LanguageResult = RESULT?.[`${ctx?.language}`];
+	const currentLang: LanguageType = (ctx?.language ||
+		"English") as keyof typeof RESULT;
+	const languageResult: LanguageResult =
+		RESULT[currentLang] || RESULT["English"];
 
 	// Safely access the base64 image
 	const annotatedBase64 = PRED_RESULT?.annotated_image;
