@@ -10,7 +10,7 @@ type DataContextTypes = {
 	setImageLoaded: React.Dispatch<React.SetStateAction<boolean>>;
 	imgUrl: string;
 	setImgUrl: React.Dispatch<React.SetStateAction<string>>;
-	uploadImage: (file: object) => void;
+	uploadImage: (file: FileList | null) => void;
 	language: LanguageType;
 	setLanguage: React.Dispatch<React.SetStateAction<LanguageType>>;
 	result: ResultType | null;
@@ -28,11 +28,14 @@ export const DataContextProvider = ({ children }: DataContextProviderProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 	const [imgUrl, setImgUrl] = useState("");
-	const [language, setLanguage] = useState("English");
+	const [language, setLanguage] = useState<LanguageType>("English");
 	const [selectedFile, setSelectedFile] = useState("");
 	const [result, setResult] = useState<ResultType | null>(null);
 
-	const uploadImage = (file: FileList) => {
+	const uploadImage = (file: FileList | null) => {
+		if (file == null) {
+			return;
+		}
 		if (!["image/jpeg", "image/png", "image/webp"].includes(file[0].type)) {
 			alert("Invalid file type");
 			return;

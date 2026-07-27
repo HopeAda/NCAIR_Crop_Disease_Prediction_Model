@@ -18,7 +18,7 @@ const CameraScreen = () => {
 		uploadRef.current?.click();
 	};
 
-	const fileInputHandler = (file) => {
+	const fileInputHandler = (file: FileList | null) => {
 		ctx?.uploadImage(file);
 	};
 

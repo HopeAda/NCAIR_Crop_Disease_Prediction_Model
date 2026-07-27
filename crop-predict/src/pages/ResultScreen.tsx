@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Badge from "../components/Badge";
 import { useContext } from "react";
 import DataContext from "../context/DataContext";
-import type { LanguageResult, ResultType } from "../types/types";
+import type { LanguageResult } from "../types/types";
 
 const ResultScreen = () => {
 	const navigate = useNavigate();
@@ -15,7 +15,8 @@ const ResultScreen = () => {
 		return;
 	}
 	console.log(PRED_RESULT);
-	const RESULT: LanguageResult = PRED_RESULT?.RESULT;
+	const RESULT: { English: LanguageResult; Hausa: LanguageResult } =
+		PRED_RESULT?.RESULT;
 	if (!RESULT) {
 		return;
 	}
