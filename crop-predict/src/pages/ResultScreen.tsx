@@ -348,8 +348,11 @@ const ResultScreen = () => {
 						<span className="uppercase text-sm font-semibold text-[#A8D0C5] text-[.8rem]">
 							{PRED_RESULT.crop}
 						</span>
-						<span className="text-3xl font-bold">
+						<span className="text-3xl font-bold text-[#0f6e56]">
 							{PRED_RESULT.disease}
+						</span>
+						<span className="text-sm italic text-[#31a789]">
+							{languageResult.pathogen}
 						</span>
 						<p className="pt-2 text-[#76a599] text-[1rem]">
 							{languageResult.description}
