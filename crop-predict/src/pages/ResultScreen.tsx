@@ -296,6 +296,7 @@ const ResultScreen = () => {
 	const ctx = useContext(DataContext);
 	const PRED_RESULT = ctx?.result;
 	console.log(PRED_RESULT);
+	console.log(PRED_RESULT?.message);
 
 	useEffect(() => {
 		if (!PRED_RESULT) {
@@ -322,10 +323,10 @@ const ResultScreen = () => {
 		: null;
 
 	return (
-		<div className="w-full md:min-h-[calc(100vh-2rem)] flex flex-col p-6 items-center gap-4 grow overflow-y-auto shrink-0">
+		<div className="w-full md:min-h-[calc(100vh-2rem)] flex flex-col p-6 items-center gap-4 grow overflow-y-auto shrink-0 lg:grid lg:grid-cols-2 lg:grid-rows-[auto_auto] lg:items-start">
 			{PRED_RESULT?.recognized && (
-				<div className="flex flex-col gap-4 w-full">
-					<div className="image rounded-lg overflow-hidden aspect-4/3 w-full md:aspect-3/1">
+				<div className="flex flex-col gap-4 w-full lg:col-span-1 lg:self-start">
+					<div className="image rounded-lg overflow-hidden aspect-4/3 w-full  lg:aspect-4/3">
 						<img
 							src={`data:image/png;base64,${annotatedBase64}`}
 							alt=""
@@ -347,7 +348,7 @@ const ResultScreen = () => {
 			)}
 
 			{hasRecommendation && languageResult ? (
-				<>
+				<div className="flex flex-col gap-2 lg:col-span-1 lg:gap-6">
 					<div className="flex flex-col gap-.5 p-3 px-4 rounded-lg border-2 border-[#A8D0C5] bg-[#F7FAF9] w-full">
 						<span className="uppercase text-sm font-semibold text-[#A8D0C5] text-[.8rem]">
 							{PRED_RESULT.crop}
@@ -377,7 +378,9 @@ const ResultScreen = () => {
 					<div className="recommended flex flex-col rounded-2xl overflow-hidden w-full">
 						<div className="w-full bg-[#0F6E56] text-white p-4">
 							<h3 className="text-md font-bold uppercase">
-								Recommended Steps
+								{ctx.language == "English"
+									? "Recommended Steps"
+									: "Matakan da aka ba da shawarar bi"}
 							</h3>
 						</div>
 						<div className="flex flex-col border border-[#A8D0C5] rounded-b-2xl">
@@ -394,7 +397,9 @@ const ResultScreen = () => {
 					<div className="prevent flex flex-col rounded-2xl overflow-hidden w-full">
 						<div className="w-full bg-[#0F6E56] text-white p-4">
 							<h3 className="text-md font-bold uppercase">
-								HOW TO PREVENT
+								{ctx?.language == "English"
+									? "HOW TO PREVENT"
+									: "Yadda za a yi rigakafi"}
 							</h3>
 						</div>
 						<div className="flex flex-col border border-[#A8D0C5] rounded-b-2xl">
@@ -407,7 +412,7 @@ const ResultScreen = () => {
 							))}
 						</div>
 					</div>
-				</>
+				</div>
 			) : (
 				// <Fallback
 				// 	message={
@@ -421,31 +426,39 @@ const ResultScreen = () => {
 				<Fallback
 					message={
 						PRED_RESULT?.recognized
-							? PRED_RESULT?.confidence < 0.6
+							? PRED_RESULT?.confidence < 0.8
 								? "We're not confident enough in this result. Please try scanning again with a clearer photo."
 								: "Great news — this crop looks healthy! No treatment needed."
-							: "No result. Please try again"
+							: "No plant disease was recognized in this image. Please make sure the photo clearly shows a plant leaf, is in focus, well lit, and fills most of the frame, then try again."
 					}
-					mode={PRED_RESULT?.status === "diseased" ? "default" : ""}
+					mode={
+						PRED_RESULT?.status === "diseased"
+							? "default"
+							: PRED_RESULT?.confidence < 0.8
+								? "unconfident"
+								: "diseased"
+					}
 				/>
 			)}
 
-			<Button
-				text={
-					ctx?.language === "Hausa"
-						? "Duba wani amfanin gona"
-						: "Scan another Crop"
-				}
-				clickFunction={() => {
-					ctx?.setIsLoading(true);
-					ctx?.setImageLoaded(false);
-					ctx?.setImgUrl("");
-					ctx?.setResult(null);
-					ctx?.setIsLoading(false);
-					navigate("/");
-				}}
-				type="main"
-			/>
+			<div className="w-full lg:col-start-2 pt-4">
+				<Button
+					text={
+						ctx?.language === "Hausa"
+							? "Duba wani amfanin gona"
+							: "Scan another Crop"
+					}
+					clickFunction={() => {
+						ctx?.setIsLoading(true);
+						ctx?.setImageLoaded(false);
+						ctx?.setImgUrl("");
+						ctx?.setResult(null);
+						ctx?.setIsLoading(false);
+						navigate("/");
+					}}
+					type="main"
+				/>
+			</div>
 		</div>
 	);
 };

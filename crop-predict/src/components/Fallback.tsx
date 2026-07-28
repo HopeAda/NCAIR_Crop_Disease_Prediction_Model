@@ -16,6 +16,13 @@ const Fallback = ({ message, mode }: FallbackProviderProps) => {
 			text =
 				"Labari mai dadi — wannan amfanin gona yana da kyau sosai! Ba ya bukatar wani magani.";
 		}
+	} else if (mode == "unconfident") {
+		if (ctx?.language == "English") {
+			text = message;
+		} else {
+			text =
+				"Ba mu da cikakken tabbaci game da wannan sakamakon. Da fatan za a sake gwada duba shi ta hanyar amfani da hoto mai kyau da kuma bayyananniya.";
+		}
 	} else {
 		if (ctx?.language == "English") {
 			text = message;

@@ -11,7 +11,7 @@ const CameraInput = ({ clickFunction }: CameraInputPropsProvider) => {
 
 	return (
 		<div
-			className="w-full md:w-[150%]"
+			className="w-full  lg:col-span-1 lg:row-span-2 "
 			onDragOver={(e) => {
 				e.preventDefault();
 				setIsDragging(true);
