@@ -16,7 +16,7 @@ const Header = () => {
 	}, [menuOpen]);
 
 	return (
-		<header className="w-full flex justify-between items-center p-2 relative bg-white">
+		<header className="w-full flex justify-between items-center p-2 fixed top-0 left-0 md:relative bg-white ">
 			<article className="flex gap-2 p-2 items-center justify-center">
 				<div className="p-2 rounded-md bg-green-900">
 					<svg

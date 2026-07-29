@@ -323,7 +323,7 @@ const ResultScreen = () => {
 		: null;
 
 	return (
-		<div className="w-full md:min-h-[calc(100vh-2rem)] flex flex-col p-6 items-center gap-4 grow overflow-y-auto shrink-0 lg:grid lg:grid-cols-2 lg:grid-rows-[auto_auto] lg:items-start">
+		<div className="w-full md:min-h-[calc(100vh-2rem)] flex flex-col p-6 items-center gap-4 grow pt-20 md:pt-6 overflow-y-auto shrink-0 lg:grid lg:grid-cols-2 lg:grid-rows-[auto_auto] lg:items-start">
 			{PRED_RESULT?.recognized && (
 				<div className="flex flex-col gap-4 w-full lg:col-span-1 lg:self-start">
 					<div className="image rounded-lg overflow-hidden aspect-4/3 w-full  lg:aspect-4/3">

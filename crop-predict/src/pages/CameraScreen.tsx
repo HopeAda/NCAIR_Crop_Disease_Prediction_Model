@@ -23,7 +23,7 @@ const CameraScreen = () => {
 	};
 
 	return (
-		<div className="flex flex-col  gap-4 p-6 pt-0 items-center md:min-h-[calc(100vh-60px)] overflow-y-auto shrink-0 ">
+		<div className="flex flex-col  gap-4 p-6 items-center md:min-h-[calc(100vh-60px)] overflow-y-auto shrink-0 pt-20 md:pt-6">
 			<h2 className=" py-2 text-sm font-semibold text-[#056e56] uppercase">
 				{ctx?.language === "Hausa"
 					? "Gano Cututtukan Shuke-shuke"
