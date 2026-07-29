@@ -65,7 +65,9 @@ const Fallback = ({ message, mode }: FallbackProviderProps) => {
 	const text = ctx?.language === "Hausa" ? HAUSA_TEXT[mode] : message;
 
 	return (
-		<div className="w-full h-30 flex justify-center items-center md:w-fit mt-10 md:mt-0">
+		<div
+			className={`w-full h-30 flex justify-center items-center md:w-fit mt-10 md:mt-0 ${mode != "healthy" ? "lg:col-span-2" : ""}`}
+		>
 			<div className="h-fit flex flex-col gap-.5 p-3 px-4 rounded-lg border-2 border-[#A8D0C5] bg-[#F7FAF9] w-full md:w-fit">
 				<span className="text-[#0F6E56] text-md font-bold">{text}</span>
 			</div>
