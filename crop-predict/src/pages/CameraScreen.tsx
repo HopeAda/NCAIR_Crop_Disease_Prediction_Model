@@ -26,8 +26,8 @@ const CameraScreen = () => {
 		<div className="flex flex-col  gap-4 p-6 items-center md:min-h-[calc(100vh-60px)] overflow-y-auto shrink-0 pt-20 md:pt-6">
 			<h2 className=" py-2 text-sm font-semibold text-[#056e56] uppercase">
 				{ctx?.language === "Hausa"
-					? "Fasahar Hangen Nesa ta AI a Aikin Gona don Gano Cututtuka da Wuri"
-					: "Farm AI Vision for Early Disease Detection"}
+					? "Fasahar Hangen Nesa ta AI da Shawarwari don Gano Cututtuka da Wuri a Noma"
+					: "Farm AI Vision and Recommendation for Early Disease Detection"}
 			</h2>
 			<div className="w-full flex flex-col gap-4 lg:grid lg:grid-cols-[2fr_1fr] lg:grid-rows-2 lg:items-start">
 				<CameraInput clickFunction={cameraFunction} />
