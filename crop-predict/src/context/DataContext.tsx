@@ -150,7 +150,7 @@ import type { ResultType, LanguageType } from "../types/types";
 
 const API_BASE = "https://stung-pursuit-earthly.ngrok-free.dev";
 const POLL_INTERVAL_MS = 3000;
-const MAX_POLL_ATTEMPTS = 160; // ~8 minutes at 3s intervals — pad above your real p99
+const MAX_POLL_ATTEMPTS = 300; // ~15 minutes at 3s intervals — pad above your real p99
 
 type DataContextTypes = {
 	isLoading: boolean;
